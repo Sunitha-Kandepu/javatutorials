@@ -1,0 +1,10 @@
+package com.example.sbb;
+
+@Controller
+public class HelloController {
+	@RequestMapping("/Hello")
+	@ResponseBody
+	public String hell() {
+		return "Hello World!";
+	}
+}

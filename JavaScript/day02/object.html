@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src = "object.js"></script>
+	<title>Document</title>
+</head>
+<body>
+	<h1>Object</h1>
+	<h2>Create</h2>
+	<script>
+		var coworkers = {
+			"Programmer" : "jeunghoon",
+			"Computer" : "Macbook M1"
+		};
+		document.write("Programmer : " + coworkers.Programmer + "<br>");
+		document.write("Computer : " + coworkers.Computer + "<br>");
+		coworkers.height = "185cm";
+		document.write("height: " + coworkers.height + "<br>");
+		coworkers["Hello World ~ !"] = "Test";
+		document.write("[Hello World ~ !] : " + coworkers["Hello World ~ !"] + "<br>");
+	</script>
+	<h2>iterator</h2>
+	<script>
+		for (var key in coworkers) {
+			document.write(key + " : " + coworkers[key] + "<br>");
+		}
+	</script>
+	<h2>Property & Method</h2>
+	<script>
+		coworkers.showAll = function() {
+			for (var key in this) {
+				if (key === "showAll") {
+					continue;
+				}
+				document.write(key + " : " + coworkers[key] + "<br>");
+			}
+		};
+		coworkers.showAll();
+	</script>
+</body>
+</html>

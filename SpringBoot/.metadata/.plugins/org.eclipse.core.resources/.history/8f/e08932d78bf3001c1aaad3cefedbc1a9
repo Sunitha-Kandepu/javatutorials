@@ -1,0 +1,6 @@
+package com.example.sbb;
+
+@Controller
+public class HelloController {
+	
+}
