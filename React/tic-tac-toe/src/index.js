@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import './index.css';
 
 const calculateWinner = squares => {
@@ -65,39 +65,67 @@ const Board = props => {
 }
 
 const Game = () => {
-	const [squares, setSquares] = useState(Array(9).fill(null));
+	const [history, setHistory] = useState([
+		Array(9).fill(null),
+	]);
 	const [xIsNext, setXIsNext] = useState(true);
+	const [stepNumber, setStepNumber] = useState(0);
 
 	const handleClick = i => {
+		const h = history.slice(0, stepNumber + 1);
+		const current = h[h.length - 1];
+		const squares = current.slice();
 		if (calculateWinner(squares) || squares[i]) {
 			return;
 		}
-		const newSquares = [...squares];
-		newSquares[i] = xIsNext ? 'X' : 'O';
-		setSquares(newSquares);
+		squares[i] = xIsNext ? 'X' : 'O';
+		const newHistory = h.concat([squares]);
+		console.log(newHistory);
+		setHistory(newHistory);
+		setStepNumber(h.length);
 		setXIsNext(!xIsNext);
 	}
-	
-	const winner = calculateWinner(squares);
-	let status;
-	if (winner) {
-		status = 'Winner: ' + winner;
-	} else {
-		status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+
+	const jumpTo = step => {
+		setStepNumber(step);
+		setXIsNext((step % 2) === 0);
+		return;
 	}
-	
+
+	const moves = history.map((step, move) => {
+		const desc = move ? 'Go to move #' + move : 'Go to game start';
+		return (
+			<li key={move}>
+				<button onClick={() => jumpTo(move)}>{desc}</button>
+			</li>
+		);
+	});
+
+	const current = history[stepNumber];
+	const winner = calculateWinner(current);
+	const setStatus = () => {
+		if (winner) {
+			return ('Winner: ' + winner);
+		} else {
+			return ('Next player: ' + (xIsNext ? 'X' : 'O'));
+		}
+	}
+	let status = setStatus();
 	return (
 		<div className="game">
 			<div className="game-board">
-				<Board squares={squares} onClick={i => handleClick(i)}/>
+				<Board
+					squares={current}
+					onClick={i => handleClick(i)}
+				/>
 			</div>
 			<div className="game-info">
 				{status}
-				{/* info */}
+				{moves}
 			</div>
 		</div>
 	);
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = createRoot(document.getElementById("root"));
 root.render(<Game />);
