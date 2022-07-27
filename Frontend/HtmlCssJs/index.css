@@ -1,0 +1,30 @@
+.wrap {
+	height: 100vh;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.items {
+	border: solid 5px black;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+}
+
+.wrap div:nth-child(1) {
+	background-color: pink;
+	/* justify-self: center; */
+}
+
+.wrap div:nth-child(2) {
+	background-color: greenyellow;
+	/* align-self: center; */
+}
+
+.wrap .items:nth-child(3) {
+	background-color: skyblue;
+	/* align-self: end; */
+}
